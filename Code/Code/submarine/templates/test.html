@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body, html {
+  height: 100%;
+  margin: 0;
+  font: 400 15px/1.8 "Lato", sans-serif;
+  color: #777;
+}
+ 
+.bgimg-1, .bgimg-2, .bgimg-3 {
+  position: relative;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+ 
+}
+.bgimg-1 {
+  background-image: url("http://192.168.2.23:8085/?action=stream");
+  height: 100%;
+}
+ 
+</style>
+ 
+<style>
+  body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+ 
+  .navbar {
+    overflow: hidden;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+  }
+ 
+  .navbar-button {
+    float: right;
+    display: block;
+    margin-top: 15px;
+    background-color: #333;
+    opacity: 50%;
+    color: white;
+    text-align: center;
+    padding: 7px 8px;
+    margin-left: 4px;
+    margin-right: 4px;
+    text-decoration: none;
+    font-size: 17px;
+  }
+  .navbar input {
+    float: left;
+    display: block;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+  }
+  .navbar a:hover {
+    background: #f1f1f1;
+    color: black;
+  }
+ 
+  .navbar a.active {
+    background-color: #04AA6D;
+    color: white;
+  }
+ 
+  .main {
+    padding: 16px;
+    margin-bottom: 40px;
+  }
+ 
+  .beans {
+    text-align: right;
+    vertical-align: top;
+    color: white;
+  }
+ 
+  .controls-right {
+    position: fixed;
+    bottom: 15%;
+    right: 1%;
+    /* width: 100%; */
+    opacity: 75%;
+  }
+ 
+  .controls-left {
+    position: fixed;
+    bottom: 15%;
+    left: 1%;
+    /* width: 100%; */
+    opacity: 75%;
+  }
+ 
+  .controls-table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+  }
+ 
+  .controls-td, .controls-th {
+    text-align: center;
+    background-color: #333;
+  }
+ 
+  .controls-hidden{
+    text-align: center;
+    font-size: large;
+  }
+ 
+  .padding-btn {
+    padding: 20px;
+    background-color: #333;
+    opacity: 50%;
+    color: white;
+    font-size: large;
+  }
+ 
+  .data {
+    padding: 10px;
+    background-color: #333;
+    position: fixed;
+    top: 3%;
+    right: 1%;
+    /* width: 100%; */
+    opacity: 50%;
+  }
+  </style>
+</head>
+<body>
+ 
+<div id="bgimg-1" class="bgimg-1"><br>
+</div>
+ 
+<div class="navbar">
+  <input type="range" min="1000" max="2000" value="1484" class="slider" id="speedSlider" style="margin-top: 10px; margin-bottom: 5px; margin-left: 0px; height: 20px; width: 30%; -webkit-appearance: none; appearance: none; background: #333; outline: none; opacity: 0.7; transition: opacity .2s;">
+  <style>
+    .slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 25px;
+      height: 25px;
+      background: #04AA6D;
+      cursor: pointer;
+    }
+ 
+    .slider::-moz-range-thumb {
+      width: 25px;
+      height: 25px;
+      background: #04AA6D;
+      cursor: pointer;
+    }
+  </style>
+  <button class="navbar-button" id="ballast-down">Ballast Down</button>
+  <button class="navbar-button" id="ballast-up">Ballast Up</button>
+  <button class="navbar-button" id="motor-stop">Motor Stop</button>
+  <button class="navbar-button" id="motor-start">Motor Start</button>
+</div>
+ 
+<div class="controls-right">
+  <table class="controls-table">
+    <tr>
+      <td class="controls-hidden"></td>
+      <td class="controls-td"><button class="padding-btn" id="cam-up">&nbsp;&nbsp;↑&nbsp;&nbsp;</button></td>
+      <td class="controls-hidden"></td>
+        </tr>
+        <tr>
+      <td class="controls-td"><button class="padding-btn" id="cam-left">&nbsp;←&nbsp;</button></td>
+      <td class="controls-hidden">📷</td>
+      <td class="controls-td"><button class="padding-btn" id="cam-right">&nbsp;→&nbsp;</button></td>
+        </tr>
+        <tr>
+      <td class="controls-hidden"></td>
+      <td class="controls-td"><button class="padding-btn" id="cam-down">&nbsp;&nbsp;↓&nbsp;&nbsp;</button></td>
+      <td class="controls-hidden"></td>
+    </tr>
+  </table>
+</div>
+ 
+<div class="controls-left">
+  <table class="controls-table">
+    <tr>
+      <td class="controls-hidden"></td>
+      <td class="controls-td"><button class="padding-btn" id="sub-up">&nbsp;&nbsp;↑&nbsp;&nbsp;</button></td>
+      <td class="controls-hidden"></td>
+        </tr>
+        <tr>
+      <td class="controls-td"><button class="padding-btn" id="sub-left">&nbsp;←&nbsp;</button></td>
+      <td class="controls-hidden">🚢</td>
+      <td class="controls-td"><button class="padding-btn" id="sub-right">&nbsp;→&nbsp;</button></td>
+        </tr>
+        <tr>
+      <td class="controls-hidden"></td>
+      <td class="controls-td"><button class="padding-btn" id="sub-down">&nbsp;&nbsp;↓&nbsp;&nbsp;</button></td>
+      <td class="controls-hidden"></td>
+    </tr>
+  </table>
+</div>
+ 
+ 
+<div class="data">
+  <p class="beans">
+    Temperature: 19 °C
+    <br>
+    Pressure: 12 kPA
+    <br>
+    Bottom Distance 1.2 m
+    <br>
+    Front Distance 1.2 m
+    <br>
+    Ballast: ██░░░ 45%
+  </p>
+</div>
+ 
+</body>
+ 
+<script>
+ 
+document.addEventListener('DOMContentLoaded', (event) => {
+ 
+  document.getElementById('bgimg-1').style.backgroundImage="url(http://" + window.location.hostname + ":8080/?action=stream";
+  let buttons = document.querySelectorAll('.padding-btn');
+  buttons.forEach(button => {
+    button.addEventListener('mousedown', () => {
+      button.dataset.held = 'true';
+    });
+    button.addEventListener('mouseup', () => {
+      button.dataset.held = 'false';
+    });
+    button.addEventListener('mouseleave', () => {
+      button.dataset.held = 'false';
+    });
+  });
+ 
+  let navButtons = document.querySelectorAll('.navbar-button');
+  navButtons.forEach(button => {
+    button.addEventListener('mousedown', () => {
+      button.dataset.held = 'true';
+    });
+    button.addEventListener('mouseup', () => {
+      button.dataset.held = 'false';
+    });
+    button.addEventListener('mouseleave', () => {
+      button.dataset.held = 'false';
+    });
+  });
+ 
+  function fetchData() {
+    let heldButtons = [];
+    let heldNavButtons = [];
+ 
+    buttons.forEach(button => {
+      if (button.dataset.held === 'true') {
+      console.log(button.innerText + ' is held');
+      heldButtons.push(button.id);
+      }
+    });
+ 
+    navButtons.forEach(button => {
+      if (button.dataset.held === 'true') {
+      console.log(button.innerText + ' is held');
+      heldNavButtons.push(button.id);
+      }
+    });
+ 
+    let sliderValue = document.getElementById('speedSlider').value;
+ 
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "data", true);
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState == 4 && xhr.status == 200) {
+        console.log(xhr.responseText);
+        var data = JSON.parse(xhr.responseText);
+        console.log(data);
+        document.querySelector(".beans").innerHTML = 
+          "Temperature: " + data.temperature + " °C<br>" +
+          "Depth: " + data.pressure + " <br>" +
+          "Bottom Distance: " + data.bottom_distance + " mm<br>" +
+          "Front Distance: " + data.front_distance + " mm<br>" +
+          "Ballast: " + data.ballast;
+      }
+    };
+    var body = JSON.stringify({ "buttons": heldButtons, "navButtons": heldNavButtons, "sliderValue": sliderValue }); 
+    xhr.send(body);
+  }
+ 
+  setInterval(fetchData, 100); // Fetch data every 1 second
+});
+ 
+</script>
+ 
+</html>

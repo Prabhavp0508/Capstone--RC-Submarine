@@ -1,0 +1,6 @@
+Metadata-Version: 2.1
+Name: motoron
+Version: 2.0.0
+Summary: Motoron Motor Controller Python library for Raspberry Pi
+Home-page: https://github.com/pololu/motoron-python
+License-File: LICENSE.txt
